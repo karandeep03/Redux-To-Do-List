@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import { connect } from 'react-redux'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <header className='App-header'>
+          <input type='text' placeholder='text' onChange={ this.props.onHandleChange } ></input>
+          <br />
+          <button onClick={ this.props.onHandleClick } >Add to List</button>
+          <br />
+          <ul>
+            {this.props.list.map ((item, index) =>
+              <li>{ item } <button onClick={ this.props.onHandleDelete.bind(this, index) } >Delete</button> </li>
+            )}
+          </ul>
+        </header>
+      </div>
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    str: state.str,
+    list: state.list
+  }
+}
+
+const mapDispachToProps = (dispach) => {
+  return {
+    onHandleChange: (e) => dispach({ type: 'INPUT_CHANGE', value: e.target.value}),
+    onHandleClick: () => dispach({ type: 'ADD_ITEM' }),
+    onHandleDelete: (id) => dispach({ type: 'DELETE_ITEM', value: id })
+
+  }
+}
+
+export default connect(mapStateToProps, mapDispachToProps) (App);
