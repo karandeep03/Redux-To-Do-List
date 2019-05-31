@@ -3,13 +3,19 @@ import './App.css';
 import { connect } from 'react-redux'
 
 class App extends Component {
+  constructor() {
+    super()
+
+    this.inputRef = React.createRef()
+  }
+
   render() {
     return (
       <div className="App">
         <header className='App-header'>
-          <input type='text' placeholder='text' onChange={ this.props.onHandleChange } ></input>
+          <input type='text' placeholder='text' ref={this.inputRef} ></input>
           <br />
-          <button onClick={ this.props.onHandleClick } >Add to List</button>
+          <button onClick={ this.props.onHandleClick.bind(this, this.inputRef) } >Add to List</button>
           <br />
           <ul>
             {this.props.list.map ((item, index) =>
@@ -31,8 +37,7 @@ const mapStateToProps = (state) => {
 
 const mapDispachToProps = (dispach) => {
   return {
-    onHandleChange: (e) => dispach({ type: 'INPUT_CHANGE', value: e.target.value}),
-    onHandleClick: () => dispach({ type: 'ADD_ITEM' }),
+    onHandleClick: (val) => dispach({ type: 'ADD_ITEM', val: val }),
     onHandleDelete: (id) => dispach({ type: 'DELETE_ITEM', value: id })
 
   }

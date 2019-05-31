@@ -1,17 +1,13 @@
 
 const initialState = {
-    list: [],
-    str: ''
+    list: []
 }
 
 const reducer = (state = initialState, action) => {
     const newState = {...state};
 
-    if(action.type === 'INPUT_CHANGE'){
-        newState.str = action.value;
-    }
     if(action.type === 'ADD_ITEM') {
-        newState.list= [...newState.list, newState.str]
+        newState.list= [...newState.list, action.val.current.value]
     }
     if(action.type === 'DELETE_ITEM') {
         newState.list = newState.list.filter((item, index) => index!= action.value )
