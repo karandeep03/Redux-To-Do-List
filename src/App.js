@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import './App.css';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import Button from './components/buttonComponent';
+import Input from './components/inputComponent';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
         <header className='App-header'>
-          <input type='text' placeholder='text' onChange={ this.props.onHandleChange } ></input>
+          <Input type='text' ph='text' typing={this.props.onHandleChange} />
           <br />
-          <button onClick={ this.props.onHandleClick } >Add to List</button>
+          <Button title={ this.props.title }  clicked={ this.props.onHandleClick } />
           <br />
           <ul>
             {this.props.list.map ((item, index) =>
@@ -25,7 +27,8 @@ class App extends Component {
 const mapStateToProps = (state) => {
   return {
     str: state.str,
-    list: state.list
+    list: state.list,
+    title: state.buttonTitle
   }
 }
 

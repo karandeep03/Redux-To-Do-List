@@ -1,7 +1,8 @@
 
 const initialState = {
     list: [],
-    str: ''
+    str: '',
+    buttonTitle: 'Add to List'
 }
 
 const reducer = (state = initialState, action) => {
